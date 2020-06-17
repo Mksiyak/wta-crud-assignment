@@ -2,6 +2,7 @@ export class Employee {
     _id: string;
     name: string;
     position: string;
-    office: string;
+    feedback: string;
     salary: number;
+    rating: number;
 }

@@ -3,6 +3,7 @@ var router = express.Router();
 var ObjectId = require('mongoose').Types.ObjectId;
 
 var { Employee } = require('../models/employee');
+const { json } = require('body-parser');
 
 // => localhost:3000/employees/
 router.get('/', (req, res) => {
@@ -26,9 +27,11 @@ router.post('/', (req, res) => {
     var emp = new Employee({
         name: req.body.name,
         position: req.body.position,
-        office: req.body.office,
+        feedback: req.body.feedback,
         salary: req.body.salary,
+        rating: req.body.rating,
     });
+    console.log(JSON.stringify(req.body));
     emp.save((err, doc) => {
         if (!err) { res.send(doc); }
         else { console.log('Error in Employee Save :' + JSON.stringify(err, undefined, 2)); }
@@ -42,8 +45,9 @@ router.put('/:id', (req, res) => {
     var emp = {
         name: req.body.name,
         position: req.body.position,
-        office: req.body.office,
+        feedback: req.body.feedback,
         salary: req.body.salary,
+        rating: req.body.rating,
     };
     Employee.findByIdAndUpdate(req.params.id, { $set: emp }, { new: true }, (err, doc) => {
         if (!err) { res.send(doc); }

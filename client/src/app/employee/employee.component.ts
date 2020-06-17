@@ -15,7 +15,9 @@ declare var M: any;
 export class EmployeeComponent implements OnInit {
 
   constructor(public employeeService: EmployeeService) { }
-  
+
+  public create = false;
+  public inrtxt = "Submit";
 
   ngOnInit() {
     this.resetForm();
@@ -29,8 +31,9 @@ export class EmployeeComponent implements OnInit {
       _id: "",
       name: "",
       position: "",
-      office: "",
-      salary: null
+      feedback: "",
+      salary: null,
+      rating:null
     }
   }
 
@@ -74,20 +77,31 @@ export class EmployeeComponent implements OnInit {
   refreshEmployeeList() {
     this.employeeService.getEmployeeList().subscribe((res) => {
       this.employeeService.employees = res as Employee[];
+      console.log(res);
     });
   }
 
   onEdit(emp: Employee) {
     this.employeeService.selectedEmployee = emp;
+    this.create = true;
+    this.inrtxt = "Update"
   }
 
-  onDelete(_id: string, form: NgForm) {
-    if (confirm('delete ?') == true) {
+  onDelete(_id: string) {
+    if (confirm('Delete ?') == true) {
       this.employeeService.deleteEmployee(_id).subscribe((res) => {
         this.refreshEmployeeList();
-        this.resetForm(form);
         M.toast({ html: 'Deleted', classes: 'rounded' });
       });
     }
+  }
+  toogleOn(temp: string){
+    this.create = true;
+    this.inrtxt = "Submit";
+    this.resetForm();
+    console.log(this.create);
+  }
+  toogleOff(){
+    this.create = false;
   }
 }

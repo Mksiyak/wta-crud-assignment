@@ -1,4 +1,8 @@
-<div>
+<div id="btn-div">
+  <button  mat-raised-button  color="primary" type="button" (click)="toogleOn('Submit')">Create</button>
+  <button  mat-raised-button color="warn" type="button" (click)="toogleOff()">Edit</button>  
+</div>
+<div *ngIf="create">
   <mat-card>
     <mat-card-title>Add here</mat-card-title>
     <form #employeeForm="ngForm" (ngSubmit)="onSubmit(employeeForm)">
@@ -11,21 +15,27 @@
       <mat-card-title>
         <input type="text" name="position" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.position" placeholder="Developer">
       </mat-card-title>
+      
       <mat-card-title>
-        <input type="text" name="office" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.office" placeholder="feedback">
+        <input type="text" name="rating" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.rating" placeholder="ex : 8.5">
       </mat-card-title>
+
+      <mat-card-title>
+        <input type="text" name="feedback" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.feedback" placeholder="feedback">
+      </mat-card-title>
+
       <mat-card-title>
         <input type="text" name="salary" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.salary" placeholder="ex : 10,000">
       </mat-card-title>
       <div class="row">
         <div class="input-field col s12">
-          <button  mat-raised-button color="primary" type="submit" [disabled]="!employeeForm.valid">Submit</button>
+          <button  mat-raised-button color="primary" id="btn-special" type="submit" [disabled]="!employeeForm.valid">{{inrtxt}}</button>
         </div>
       </div>
     </form>
   </mat-card>
 </div>
-<div>
+<div *ngIf="!create">
   <mat-card>
     <h1>Update</h1>
     <mat-expansion-panel *ngFor="let emp of employeeService.employees">
@@ -39,15 +49,17 @@
             <th>Position</th>
             <th>Feedback</th>
             <th>Salary</th>
+            <th>Rating</th>
           </tr>
         </thead>
           <tr>
             <td>{{emp.position}}</td>
-            <td>{{emp.office}}</td>
+            <td>{{emp.feedback}}</td>
             <td>{{emp.salary}}</td>
+            <td>{{emp.rating}}</td>
             <td>
-              <button style="margin: 10px;" class="action-btn" (click)="onEdit(emp)"><i class="material-icons">edit</i></button>
-              <button style="margin: 10px;" class="action-btn" (click)="onDelete(emp._id,employeeForm)"><i class="material-icons">delete</i></button>
+              <button style="margin: 10px;" class="action-btn" (click)="onEdit(emp)" ><i class="material-icons">edit</i></button>
+              <button style="margin: 10px;" class="action-btn" (click)="onDelete(emp._id)"><i class="material-icons">delete</i></button>
             </td>
           </tr>
         </table>
