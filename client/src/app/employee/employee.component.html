@@ -1,0 +1,57 @@
+<div>
+  <mat-card>
+    <mat-card-title>Add here</mat-card-title>
+    <form #employeeForm="ngForm" (ngSubmit)="onSubmit(employeeForm)">
+      <mat-card-title>
+        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="employeeService.selectedEmployee._id">
+      </mat-card-title>
+      <mat-card-title>
+        <input type="text" name="name" #name="ngModel" placeholder="John Doe" [(ngModel)]="employeeService.selectedEmployee.name" placeholder="john doe" required>
+      </mat-card-title>
+      <mat-card-title>
+        <input type="text" name="position" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.position" placeholder="Developer">
+      </mat-card-title>
+      <mat-card-title>
+        <input type="text" name="office" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.office" placeholder="feedback">
+      </mat-card-title>
+      <mat-card-title>
+        <input type="text" name="salary" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.salary" placeholder="ex : 10,000">
+      </mat-card-title>
+      <div class="row">
+        <div class="input-field col s12">
+          <button  mat-raised-button color="primary" type="submit" [disabled]="!employeeForm.valid">Submit</button>
+        </div>
+      </div>
+    </form>
+  </mat-card>
+</div>
+<div>
+  <mat-card>
+    <h1>Update</h1>
+    <mat-expansion-panel *ngFor="let emp of employeeService.employees">
+      <mat-expansion-panel-header>
+        {{emp.name}}
+      </mat-expansion-panel-header>
+      <mat-action-row>
+      <table class="responsive-table highlight">
+        <thead>
+          <tr>
+            <th>Position</th>
+            <th>Feedback</th>
+            <th>Salary</th>
+          </tr>
+        </thead>
+          <tr>
+            <td>{{emp.position}}</td>
+            <td>{{emp.office}}</td>
+            <td>{{emp.salary}}</td>
+            <td>
+              <button style="margin: 10px;" class="action-btn" (click)="onEdit(emp)"><i class="material-icons">edit</i></button>
+              <button style="margin: 10px;" class="action-btn" (click)="onDelete(emp._id,employeeForm)"><i class="material-icons">delete</i></button>
+            </td>
+          </tr>
+        </table>
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-card>
+</div>
